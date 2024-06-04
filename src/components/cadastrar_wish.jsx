@@ -12,18 +12,17 @@ import {
   Grid
 } from '@mui/material';
 
-const Cadastrar_Usuario = () => {
+const Cadastrar_wish = () => {
   const { register, handleSubmit, reset } = useForm();
   const [aviso, setAviso] = useState("");
 
   const salvar = async (campos) => {
     try {
-      //Vamos enviar os dados digitados para a rota /user do backend
-      await api.post("user/createUsers", campos);
-      setAviso("Usuário cadastrado com sucesso!");
+      await api.post("wish/createWish", campos);
+      setAviso("Jogo adicionado a wishList.");
       reset();
     } catch (error) {
-      setAviso("Erro ao cadastrar usuário!");
+      setAviso("Erro ao cadastrar na WishList");
     }
   };
 
@@ -39,38 +38,38 @@ const Cadastrar_Usuario = () => {
         p={4}
       >
         <Typography component="h1" variant="h4" gutterBottom>
-          Log-in  
+          Wish
         </Typography>
         <form onSubmit={handleSubmit(salvar)}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Username"
+                label="Jogo"
                 variant="outlined"
                 required
                 autoFocus
-                {...register("username")}
+                {...register("game")}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Email"
+                label="Comentários"
                 variant="outlined"
-                type="email"
                 required
-                {...register("email")}
+                {...register("description")}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                label="Senha"
+                label="Preço"
                 variant="outlined"
-                type="password"
+                type="number"
                 required
-                {...register("password")}
+                step="0.01"
+                {...register("price")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -105,4 +104,4 @@ const Cadastrar_Usuario = () => {
   );
 };
 
-export default Cadastrar_Usuario;
+export default Cadastrar_wish;

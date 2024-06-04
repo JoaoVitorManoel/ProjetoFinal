@@ -1,28 +1,25 @@
-import "../css/ItemLista.css";
-//const ItemLista = (props) => { 
-//nocódigo abaixo fiz a desestruturação de props
-const ItemLista = ({
-    id,
-    titulo,
-    descricao,
-    status,
-    data_criacao,
-    data_limite,
-    excluirClick,
-    alterarClick}) => {
+import { TableCell, TableRow, IconButton } from '@mui/material';
+import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material'; // Renomeando os imports dos ícones para evitar conflitos de nome
+import { useTheme } from '../contexts/ThemeToggleProvider'; // Importando useTheme do ThemeToggleProvider
+
+const ItemLista = ({ id, game, description, price, excluirClick, alterarClick }) => {
+    const { theme } = useTheme(); // Obtendo o objeto de tema do ThemeToggleProvider
+
     return (
-        <tr>
-            <td>{id}</td>
-            <td>{titulo}</td>
-            <td>{descricao}</td>
-            <td>{status}</td>
-            <td>{data_criacao}</td>
-            <td>{data_limite}</td>
-            <td class="text-center">
-                <i className="exclui text-danger fw-bold" title="Excluir" onClick={excluirClick}>&#10008;</i>
-                <i className="altera text-sucess fw-bold ms-2" title="Alterar" onClick={alterarClick}>&#36;</i>
-            </td>
-        </tr>
+        <TableRow>
+            <TableCell>{id}</TableCell>
+            <TableCell>{game}</TableCell>
+            <TableCell>{description}</TableCell>
+            <TableCell>{price}</TableCell>
+            <TableCell>
+                <IconButton onClick={alterarClick} style={{ color: theme.palette.primary.main }}> {/* Definindo a cor do ícone de acordo com o tema */}
+                    <EditIcon />
+                </IconButton>
+                <IconButton onClick={excluirClick} style={{ color: theme.palette.secondary.main }}> {/* Definindo a cor do ícone de acordo com o tema */}
+                    <DeleteIcon />
+                </IconButton>
+            </TableCell>
+        </TableRow>
     );
 };
 

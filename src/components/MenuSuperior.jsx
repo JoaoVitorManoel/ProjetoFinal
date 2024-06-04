@@ -1,29 +1,46 @@
+// src/components/MenuSuperior.jsx
 import { Link } from "react-router-dom";
+import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { useTheme } from '../contexts/ThemeToggleProvider';
+
+const NavLink = styled(Link)(({ theme }) => ({
+  color: theme.palette.common.white,
+  textDecoration: 'none',
+  margin: theme.spacing(1),
+}));
 
 const MenuSuperior = () => {
-  return (
-    <nav className="navbar navbar-expand-sm bg-primary navbar-dark sticky-top">
-      <div className="container">
-        <Link to="/" className="navbar-brand">Controle de Tarefas</Link>
-        <ul className="navbar-nav">
-          <li className="nav-item">
-            <Link to="/" className="nav-link">Incluir Tarefa</Link>
-          </li>
+  const { isDarkMode, toggleTheme } = useTheme();
 
-          <li className="nav-item">
-            <Link to="/manutencao" className="nav-link">Manutenção de Tarefas</Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/user" className="nav-link">Cadastrar Usuário</Link>
-          </li>
-          <li className="nav-item">
-            <button className="btn btn-sm btn-outline-secondary">
-              Logout
-            </button>
-          </li>
-        </ul>
-      </div>
-    </nav>
+  return (
+    <AppBar position="sticky" sx={{ bgcolor: isDarkMode ? 'black' : 'primary.main' }}>
+      <Toolbar>
+        <Box sx={{ flexGrow: 1 }}>
+          <NavLink to="/">
+            <Typography variant="h6">
+              Lista de desejos
+            </Typography>
+          </NavLink>
+        </Box>
+        <Box>
+          <NavLink to="/">
+            <Button color="inherit">Wish</Button>
+          </NavLink>
+          <NavLink to="/manutencao">
+            <Button color="inherit">WishList</Button>
+          </NavLink>
+          <NavLink to="/user">
+            <Button color="inherit">Log-in</Button>
+          </NavLink>
+          <Button color="inherit" variant="outlined" sx={{ marginLeft: 1 }}>
+            Logout
+          </Button> <Button color="inherit" onClick={toggleTheme} sx={{ marginLeft: 1 }}>
+            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+          </Button>
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 };
 

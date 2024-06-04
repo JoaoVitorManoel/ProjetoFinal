@@ -1,6 +1,7 @@
-import Cadastrar_Tarefas from './components/cadastrar_tarefa';
+import React from 'react';
+import Cadastrar_Tarefas from './components/cadastrar_wish';
 import Menu_Superior from './components/MenuSuperior';
-import Manutencao_Tarefas from './components/manutencao_tarefas';
+import Manutencao_Tarefas from './components/manutencao_wishlist';
 import FormularioLogin from './components/login';
 import Cadastrar_Usuarios from './components/cadastrar_usuario';
 import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from 'react-router-dom';
@@ -15,6 +16,20 @@ const ProtectedRoute = ({ children }) => {
     navigate('/login'); // Redirect to login on unauthorized access
     return null;
   }
+  
+  const App = () => {
+    return (
+      <Router>
+        <MenuSuperior />
+        <Routes>
+          <Route path="/" element={<div>Home</div>} />
+          <Route path="/manutencao" element={<ManutencaoWishList />} />
+          <Route path="/user" element={<div>User</div>} />
+        </Routes>
+      </Router>
+    );
+  };
+  
 
   return children;
 };
@@ -26,7 +41,8 @@ const RoutesWithAuth = () => {
     <Router>
       {autenticado && <Menu_Superior />}
       <Routes>
-        <Route path="/login" element={<FormularioLogin />} />
+            <Route path="/login" component={FormularioLogin} />
+            <Route path="/register" component={Cadastrar_Usuarios} />
         <Route path="/" element={autenticado ? (<Cadastrar_Tarefas /> // Use replace to prevent history stack issues
             ) : <FormularioLogin />}
         />
